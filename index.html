@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小艺 · 自我介绍 | Xiao Yi's Page</title>
+<meta name="description" content="小艺的二次元风格个人介绍页：学生、爱奶茶、爱追剧、爱生活。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='78' font-size='80'%3E%F0%9F%8C%B8%3C/text%3E%3C/svg%3E">
+<style>
+/* ============ 自定义字体：字魂流氓兔体 ============ */
+@font-face{
+  font-family:"LiuLangTu";
+  src:url("assets/fonts/liulangtu.ttf") format("truetype");
+  font-weight:400;
+  font-style:normal;
+  font-display:swap;
+}
+
+/* ============ 基础变量 ============ */
+:root{
+  --pink:#ff9ec4;
+  --pink-deep:#ff6fa5;
+  --purple:#a98cf0;
+  --purple-deep:#7b5fd6;
+  --lemon:#ffe58a;
+  --sky:#a9d8ff;
+  --cream:#fffaf3;
+  --ink:#40304a;
+  --ink-soft:#6d5a79;
+  --glass:rgba(255,255,255,.74);
+  --glass-b:rgba(255,255,255,.9);
+  --radius:28px;
+  --font:"LiuLangTu","ZCOOL KuaiLe","Yuanti SC","PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+html{scroll-behavior:smooth;overflow-x:clip;}
+
+body{
+  font-family:var(--font);
+  color:var(--ink);
+  background:#fdf3f8;
+  min-height:100vh;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+/* ============ 背景（整张插图） ============ */
+.bg{
+  position:fixed;
+  inset:0;
+  z-index:-3;
+  background-image:url("assets/bg.png");
+  background-size:cover;
+  background-position:47% 22%;
+  background-repeat:no-repeat;
+  transform:scale(1.04);
+  transition:transform 1.6s ease-out;
+}
+html.ready .bg{transform:scale(1);}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  background:
+    radial-gradient(120% 80% at 15% 20%, rgba(255,255,255,.72) 0%, rgba(255,255,255,.18) 45%, rgba(255,255,255,0) 70%),
+    linear-gradient(100deg, rgba(255,252,248,.86) 0%, rgba(255,246,252,.56) 42%, rgba(253,240,250,.10) 68%, rgba(255,255,255,0) 100%);
+  pointer-events:none;
+}
+@media (max-width:900px){
+  .bg{background-position:52% 12%;}
+  body::before{
+    background:
+      linear-gradient(180deg, rgba(255,250,246,.34) 0%, rgba(255,243,250,.60) 38%, rgba(255,247,251,.88) 100%);
+  }
+}
+
+/* ============ 氛围层：光斑 / 花瓣 / 柠檬片 ============ */
+.ambient{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;}
+
+.orb{position:absolute;border-radius:50%;filter:blur(38px);opacity:.55;mix-blend-mode:screen;}
+.orb.a{width:340px;height:340px;left:4%;top:6%;background:radial-gradient(circle,#ffe9a8,transparent 70%);animation:float1 15s ease-in-out infinite;}
+.orb.b{width:300px;height:300px;right:6%;bottom:8%;background:radial-gradient(circle,#ffc7e2,transparent 70%);animation:float2 18s ease-in-out infinite;}
+.orb.c{width:260px;height:260px;left:38%;bottom:2%;background:radial-gradient(circle,#c9b6ff,transparent 70%);animation:float1 21s ease-in-out infinite reverse;}
+@keyframes float1{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(26px,-30px,0)}}
+@keyframes float2{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(-30px,-20px,0)}}
+
+.petal{
+  position:absolute;
+  top:-8vh;
+  font-size:20px;
+  opacity:0;
+  animation:fall linear infinite;
+  filter:drop-shadow(0 3px 6px rgba(255,150,190,.35));
+  will-change:transform,opacity;
+}
+@keyframes fall{
+  0%{transform:translate3d(0,-10vh,0) rotate(0deg);opacity:0;}
+  12%{opacity:.95;}
+  88%{opacity:.9;}
+  100%{transform:translate3d(60px,112vh,0) rotate(320deg);opacity:0;}
+}
+
+/* ============ 顶部进度条 ============ */
+.progress{
+  position:fixed;top:0;left:0;height:5px;width:0%;
+  background:linear-gradient(90deg,var(--lemon),var(--pink),var(--purple));
+  z-index:50;border-radius:0 99px 99px 0;
+  box-shadow:0 2px 12px rgba(255,140,190,.55);
+  transition:width .12s linear;
+}
+
+/* ============ 布局 ============ */
+.wrap{
+  position:relative;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:clamp(22px,3vw,52px) clamp(18px,3vw,52px);
+  max-width:1680px;
+  margin:0 auto;
+}
+
+/* ============ 卡片 ============ */
+.card{
+  flex:0 1 740px;
+  max-width:740px;
+  margin:0 auto;
+  background:linear-gradient(160deg,var(--glass-b),var(--glass));
+  backdrop-filter:blur(16px) saturate(1.25);
+  -webkit-backdrop-filter:blur(16px) saturate(1.25);
+  border:2px solid rgba(255,255,255,.85);
+  border-radius:var(--radius);
+  padding:clamp(24px,3.2vw,46px);
+  box-shadow:
+    0 26px 60px -22px rgba(180,120,180,.45),
+    0 8px 24px -12px rgba(255,150,190,.35),
+    inset 0 1px 0 rgba(255,255,255,.9);
+  position:relative;
+  opacity:0;
+  transform:translateY(26px) scale(.985);
+  animation:cardIn 1s .15s cubic-bezier(.22,1,.36,1) forwards;
+}
+@keyframes cardIn{to{opacity:1;transform:translateY(0) scale(1);}}
+
+/* 桌面端：卡片横向铺满；内容按可用宽度自适应分栏（页面越窄自动减列） */
+@media (min-width:901px){
+  .card{
+    flex:1 1 auto;
+    width:100%;
+    max-width:none;
+    padding:clamp(28px,2.5vw,46px) clamp(30px,3.4vw,64px);
+  }
+  .cols{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:clamp(18px,1.9vw,32px);
+    align-items:start;
+    margin-top:clamp(10px,1vw,16px);
+  }
+  .sec{margin-top:16px;}
+  .facts{grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:12px;}
+  .fact{padding:11px 14px 12px;}
+  .quote{padding:13px 17px 13px 42px;margin-top:16px;}
+  .foot{margin-top:20px;padding-top:14px;}
+  h1.name{font-size:clamp(42px,4.4vw,64px);}
+  .card{box-shadow:0 20px 48px -24px rgba(180,120,180,.42),0 6px 20px -12px rgba(255,150,190,.3),inset 0 1px 0 rgba(255,255,255,.9);}
+  .foot{grid-column:1/-1;}
+  .lead{
+    font-size:clamp(16px,1.12vw,18px);
+    line-height:1.9;
+  }
+  .sec-title{font-size:clamp(20px,1.42vw,25px);}
+  .chip{font-size:clamp(15px,1.02vw,17px);}
+  .fact .v{font-size:clamp(16px,1.08vw,18px);}
+  .bar-label,
+  .quote{font-size:clamp(15px,1.02vw,17px);}
+  .btn{font-size:clamp(15px,1.02vw,17px);}
+}
+
+/* ============ 分栏 ============ */
+@media (max-width:900px){
+  .cols{display:block;}
+  .quote{margin-top:24px;}
+}
+@media (min-width:901px) and (max-width:1299px){
+  .cols{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media (min-width:901px) and (max-width:1060px){
+  .cols{grid-template-columns:1fr;}
+}
+
+/* 卡片角上的小装饰 */
+.card::before,.card::after{
+  content:"";
+  position:absolute;
+  width:78px;height:78px;
+  border-radius:50%;
+  border:3px dashed rgba(255,158,196,.55);
+  pointer-events:none;
+}
+.card::before{top:-26px;left:-26px;}
+.card::after{bottom:-30px;right:-30px;border-color:rgba(169,140,240,.5);}
+
+/* ============ 头部信息 ============ */
+.tag{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:15px;letter-spacing:.06em;
+  color:#fff;
+  background:linear-gradient(120deg,var(--pink-deep),var(--purple));
+  padding:7px 18px 9px;
+  border-radius:99px;
+  box-shadow:0 8px 18px -8px rgba(180,110,200,.8);
+}
+.tag .dot{width:8px;height:8px;border-radius:50%;background:var(--lemon);box-shadow:0 0 0 0 rgba(255,229,138,.9);animation:pulse 1.9s infinite;}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(255,229,138,0);}100%{box-shadow:0 0 0 0 rgba(255,229,138,0);}}
+
+h1.name{
+  font-size:clamp(42px,6.4vw,76px);
+  line-height:1.08;
+  margin:16px 0 6px;
+  letter-spacing:.02em;
+  background:linear-gradient(96deg,#f2559a 0%,#9a5fe0 48%,#3f9ee6 100%);
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent;
+  filter:drop-shadow(0 3px 6px rgba(255,120,180,.28));
+}
+.name-jp{
+  font-size:clamp(14px,1.5vw,18px);
+  color:var(--ink-soft);
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  margin-bottom:14px;
+}
+.role{
+  font-size:clamp(17px,1.9vw,22px);
+  color:var(--purple-deep);
+  margin-bottom:16px;
+}
+.role em{
+  font-style:normal;
+  background:linear-gradient(transparent 62%,rgba(255,229,138,.85) 62%);
+  padding:0 3px;
+}
+.lead{
+  font-size:clamp(16px,1.6vw,19px);
+  line-height:1.88;
+  color:var(--ink);
+  margin-bottom:8px;
+}
+.lead + .lead{margin-top:8px;}
+
+.quote{
+  margin:22px 0 6px;
+  padding:16px 20px 16px 48px;
+  position:relative;
+  font-size:clamp(15px,1.55vw,18px);
+  line-height:1.85;
+  color:#6a5570;
+  background:rgba(255,255,255,.62);
+  border-radius:18px;
+  border-left:5px solid var(--pink);
+}
+.quote::before{
+  content:"❝";
+  position:absolute;left:16px;top:8px;
+  font-size:30px;color:var(--pink);
+  line-height:1;
+}
+
+/* ============ 小标题 ============ */
+.sec{margin-top:24px;}
+.sec-title{
+  display:flex;align-items:center;gap:10px;
+  font-size:clamp(19px,2.1vw,24px);
+  color:var(--ink);
+  margin-bottom:12px;
+}
+.sec-title::after{
+  content:"";flex:1;height:3px;border-radius:99px;
+  background:linear-gradient(90deg,rgba(255,158,196,.7),rgba(255,229,138,.5),rgba(255,255,255,0));
+}
+.sec-title .ico{font-size:1.05em;filter:drop-shadow(0 2px 4px rgba(255,150,190,.5));}
+
+/* ============ 标签云 ============ */
+.chips{display:flex;flex-wrap:wrap;gap:10px;}
+.chip{
+  font-size:15px;
+  padding:10px 19px 12px;
+  border-radius:99px;
+  background:rgba(255,255,255,.9);
+  border:2px solid rgba(255,255,255,.9);
+  box-shadow:0 6px 16px -10px rgba(160,120,190,.75);
+  color:#6c5a76;
+  transition:transform .28s cubic-bezier(.34,1.56,.64,1),box-shadow .28s,background .28s,color .28s;
+  cursor:default;
+}
+.chip:hover{
+  transform:translateY(-5px) rotate(-2deg);
+  background:linear-gradient(120deg,#fff0f7,#f3ecff);
+  color:var(--purple-deep);
+  box-shadow:0 14px 26px -12px rgba(200,120,200,.9);
+}
+.chip.c1{border-color:#ffd9e8}
+.chip.c2{border-color:#e2d8ff}
+.chip.c3{border-color:#fff0bd}
+.chip.c4{border-color:#d5ecff}
+
+/* ============ 技能条 ============ */
+.bars{display:grid;gap:16px;}
+.bar-row{display:grid;grid-template-columns:clamp(86px,10vw,120px) 1fr;align-items:center;gap:14px;}
+.bar-label{font-size:15px;color:#6a5570;}
+.bar-track{
+  height:16px;border-radius:99px;
+  background:rgba(255,255,255,.8);
+  box-shadow:inset 0 2px 5px rgba(160,120,180,.22);
+  overflow:hidden;position:relative;
+}
+.bar-fill{
+  display:block;
+  height:100%;
+  width:var(--w,0%);
+  border-radius:99px;
+  background-color:#ff9ec4;
+  background-image:
+    repeating-linear-gradient(115deg,rgba(255,255,255,.5) 0 8px,rgba(255,255,255,0) 8px 18px),
+    linear-gradient(90deg,#ffe58a,#ff9ec4 45%,#a98cf0);
+  box-shadow:0 0 12px rgba(255,150,200,.7);
+  animation:barGrow 1.3s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes barGrow{from{width:0;}to{width:var(--w,0%);}}
+
+/* ============ 资料小格 ============ */
+.facts{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(186px,1fr));
+  gap:14px;
+}
+.fact{
+  background:rgba(255,255,255,.72);
+  border:2px solid rgba(255,255,255,.85);
+  border-radius:18px;
+  padding:14px 16px 16px;
+  box-shadow:0 8px 20px -14px rgba(150,120,190,.9);
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1),background .3s;
+}
+.fact:hover{transform:translateY(-4px);background:rgba(255,255,255,.92);}
+.fact .k{font-size:14px;color:#a08cab;letter-spacing:.08em;}
+.fact .v{font-size:17px;color:#5b4763;margin-top:4px;}
+
+/* ============ 留言 / 联系方式 ============ */
+.links{display:flex;flex-wrap:wrap;gap:12px;}
+.btn{
+  display:inline-flex;align-items:center;gap:9px;
+  font-family:inherit;
+  font-size:16px;
+  text-decoration:none;
+  padding:12px 22px 14px;
+  border-radius:99px;
+  color:#fff;
+  background:linear-gradient(120deg,var(--pink-deep),var(--purple));
+  box-shadow:0 14px 26px -14px rgba(190,110,200,.95);
+  transition:transform .28s cubic-bezier(.34,1.56,.64,1),box-shadow .28s,filter .28s;
+  border:none;cursor:pointer;
+}
+.btn.ghost{
+  color:var(--purple-deep);
+  background:rgba(255,255,255,.9);
+  box-shadow:0 10px 22px -16px rgba(150,120,190,.9);
+  border:2px solid rgba(255,255,255,.9);
+}
+.btn:hover{transform:translateY(-4px) scale(1.03);filter:brightness(1.05);box-shadow:0 20px 32px -16px rgba(190,110,200,1);}
+.btn:active{transform:translateY(-1px) scale(.99);}
+
+/* ============ 页脚 ============ */
+.foot{
+  margin-top:30px;
+  padding-top:18px;
+  border-top:2px dashed rgba(200,170,220,.55);
+  display:flex;flex-wrap:wrap;gap:8px 16px;
+  align-items:center;justify-content:space-between;
+  font-size:14px;color:#9b8aa6;
+}
+.foot .heart{color:var(--pink-deep);}
+
+/* ============ 入场动画（纯 CSS 错峰，不依赖脚本） ============ */
+.card > *{opacity:0;animation:fadeUp .9s cubic-bezier(.22,1,.36,1) forwards;}
+.card > *:nth-child(1){animation-delay:.30s}
+.card > *:nth-child(2){animation-delay:.38s}
+.card > *:nth-child(3){animation-delay:.44s}
+.card > *:nth-child(4){animation-delay:.50s}
+.card > *:nth-child(5){animation-delay:.56s}
+.card > *:nth-child(6){animation-delay:.62s}
+.card > *:nth-child(7){animation-delay:.68s}
+.card > *:nth-child(8){animation-delay:.74s}
+.card > *:nth-child(9){animation-delay:.80s}
+.card > *:nth-child(10){animation-delay:.86s}
+.card > *:nth-child(11){animation-delay:.92s}
+.card > *:nth-child(12){animation-delay:.98s}
+.card > *:nth-child(13){animation-delay:1.04s}
+.card > *:nth-child(14){animation-delay:1.10s}
+.card > *:nth-child(n+15){animation-delay:1.16s}
+.card > .cols{transform:none;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:none;}}
+
+/* ============ 回到顶部 ============ */
+.top{
+  position:fixed;right:clamp(14px,2.4vw,32px);bottom:clamp(14px,2.4vw,32px);
+  width:52px;height:52px;border-radius:50%;
+  display:grid;place-items:center;
+  font-size:20px;color:#fff;text-decoration:none;
+  background:linear-gradient(140deg,var(--pink),var(--purple));
+  box-shadow:0 16px 30px -14px rgba(180,110,200,1);
+  opacity:0;pointer-events:none;transform:translateY(14px);
+  transition:.4s cubic-bezier(.22,1,.36,1);
+  z-index:40;
+}
+.top.show{opacity:1;pointer-events:auto;transform:none;}
+.top:hover{transform:translateY(-4px) rotate(-8deg);}
+
+/* ============ 响应式 ============ */
+@media (max-width:900px){
+  .wrap{display:block;padding-top:clamp(60px,16vh,150px);}
+  .card{max-width:100%;margin:0 auto;border-radius:24px;}
+  h1.name{font-size:clamp(38px,12vw,58px);}
+}
+@media (max-width:420px){
+  .card{padding:22px 18px 26px;}
+  .quote{padding:14px 16px 14px 42px;}
+  .bar-row{grid-template-columns:76px 1fr;gap:10px;}
+}
+
+/* 字体还没加载好时，先用系统字体，避免方框/抖动 */
+html:not(.font-ready) body{letter-spacing:0;}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;opacity:1 !important;}
+  .petal{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<!-- 背景插图 -->
+<div class="bg" aria-hidden="true"></div>
+
+<!-- 氛围装饰 -->
+<div class="ambient" aria-hidden="true">
+  <span class="orb a"></span>
+  <span class="orb b"></span>
+  <span class="orb c"></span>
+  <span class="petal">🍋</span>
+  <span class="petal">🌸</span>
+  <span class="petal">✨</span>
+  <span class="petal">💜</span>
+  <span class="petal">🍋</span>
+  <span class="petal">🌸</span>
+  <span class="petal">✨</span>
+  <span class="petal">🎀</span>
+</div>
+
+<main class="wrap">
+    <article class="card">
+    <span class="tag"><span class="dot"></span>Nice to meet you · 初次见面</span>
+
+    <h1 class="name">小艺</h1>
+    <p class="name-jp">Xiao Yi · シアオイー</p>
+    <p class="role">学生 / 甜品爱好者 / <em>爱笑的女孩子</em></p>
+
+    <div class="cols">
+      <!-- 第一栏：自我介绍 -->
+      <div class="col">
+        <section class="sec">
+          <h2 class="sec-title"><span class="ico">🍋</span>关于我</h2>
+          <p class="lead">嗨，我是小艺。一个把日子过成淡粉色的女孩子——喜欢一切柔软、明亮、甜甜的东西。</p>
+          <p class="lead">现在还是学生，白天上课记笔记，晚上写作业、追剧、听歌，偶尔抱着手机傻笑到很晚。相信认真对待每一天，生活就会慢慢变成喜欢的样子。</p>
+        </section>
+        <div class="quote">如果不开心，就去买一杯奶茶吧。甜甜的东西会让人重新有力气。</div>
+      </div>
+
+      <!-- 第二栏：基本资料与喜好 -->
+      <div class="col">
+        <section class="sec">
+          <h2 class="sec-title"><span class="ico">🎀</span>基本资料</h2>
+          <div class="facts">
+            <div class="fact"><div class="k">NAME</div><div class="v">小艺 / Xiao Yi</div></div>
+            <div class="fact"><div class="k">GENDER</div><div class="v">女孩子 ♀</div></div>
+            <div class="fact"><div class="k">BIRTHDAY</div><div class="v">8 月 9 日 · 狮子座</div></div>
+            <div class="fact"><div class="k">OCCUPATION</div><div class="v">学生 📚</div></div>
+            <div class="fact"><div class="k">LOCATION</div><div class="v">中国 · 想环游世界</div></div>
+            <div class="fact"><div class="k">STATUS</div><div class="v">元气满满中 ✦</div></div>
+          </div>
+        </section>
+
+        <section class="sec">
+          <h2 class="sec-title"><span class="ico">💜</span>喜欢的东西</h2>
+          <div class="chips">
+            <span class="chip c1">🧋 珍珠奶茶</span>
+            <span class="chip c2">🍰 小蛋糕</span>
+            <span class="chip c3">🎀 蝴蝶结</span>
+            <span class="chip c4">🎧 戴着耳机听歌</span>
+            <span class="chip c1">🎬 追剧到深夜</span>
+            <span class="chip c2">📖 小说和漫画</span>
+            <span class="chip c3">🌸 春天和花</span>
+            <span class="chip c4">🐱 猫猫视频</span>
+            <span class="chip c1">📷 随手拍天空</span>
+            <span class="chip c2">😴 周末睡到自然醒</span>
+            <span class="chip c3">🍓 草莓味的一切</span>
+            <span class="chip c4">✨ 亮晶晶的小东西</span>
+          </div>
+        </section>
+      </div>
+
+      <!-- 第三栏：能力与联系 -->
+      <div class="col">
+        <section class="sec" id="skills">
+          <h2 class="sec-title"><span class="ico">✨</span>能力值</h2>
+          <div class="bars">
+            <div class="bar-row"><span class="bar-label">认真上课</span><span class="bar-track"><i class="bar-fill" style="--w:86%"></i></span></div>
+            <div class="bar-row"><span class="bar-label">整理笔记</span><span class="bar-track"><i class="bar-fill" style="--w:92%"></i></span></div>
+            <div class="bar-row"><span class="bar-label">奶茶鉴赏</span><span class="bar-track"><i class="bar-fill" style="--w:100%"></i></span></div>
+            <div class="bar-row"><span class="bar-label">做甜点</span><span class="bar-track"><i class="bar-fill" style="--w:74%"></i></span></div>
+            <div class="bar-row"><span class="bar-label">熬夜追剧</span><span class="bar-track"><i class="bar-fill" style="--w:95%"></i></span></div>
+            <div class="bar-row"><span class="bar-label">早起</span><span class="bar-track"><i class="bar-fill" style="--w:20%"></i></span></div>
+          </div>
+        </section>
+
+        <section class="sec">
+          <h2 class="sec-title"><span class="ico">💌</span>可以找我聊聊</h2>
+          <div class="links">
+            <a class="btn" href="mailto:xiaoyi@example.com">✉️ 发邮件给我</a>
+            <a class="btn ghost" href="#skills">📚 我的小日常</a>
+            <button class="btn ghost" id="helloBtn" type="button">🍋 打个招呼</button>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <span>© <span id="year">2026</span> 小艺 · 用 <span class="heart">♥</span> 与柠檬做成的页面</span>
+      <span>背景插画：@EE来步</span>
+    </footer>
+  </article>
+</main>
+
+<a class="top" id="top" href="#" aria-label="回到顶部">↑</a>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---- 字体加载完成后再加标记，避免闪烁 ---- */
+  try{
+    var font = new FontFace("LiuLangTu", 'url("assets/fonts/liulangtu.ttf")', {display:"swap"});
+    font.load().then(function(f){
+      document.fonts.add(f);
+      document.documentElement.classList.add("font-ready");
+    }).catch(function(){
+      if(document.fonts && document.fonts.ready){
+        document.fonts.ready.then(function(){document.documentElement.classList.add("font-ready");});
+      }
+    });
+  }catch(e){
+    document.documentElement.classList.add("font-ready");
+  }
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(function(){document.documentElement.classList.add("font-ready");});
+  }
+
+  /* ---- 花瓣随机化 ---- */
+  var petals = document.querySelectorAll(".petal");
+  for(var i=0;i<petals.length;i++){
+    var p = petals[i];
+    p.style.left = (3 + Math.random()*85).toFixed(2) + "%";
+    p.style.animationDuration = (11 + Math.random()*9).toFixed(1) + "s";
+    p.style.animationDelay = (-Math.random()*16).toFixed(1) + "s";
+    p.style.fontSize = (14 + Math.random()*16).toFixed(0) + "px";
+  }
+
+  /* ---- 滚动进度 + 回到顶部 ---- */
+  var progress = document.getElementById("progress");
+  var topBtn = document.getElementById("top");
+  var ticking = false;
+  function onScroll(){
+    var h = document.documentElement;
+    var max = (h.scrollHeight - h.clientHeight) || 1;
+    var pct = Math.min(100, Math.max(0, (h.scrollTop || document.body.scrollTop) / max * 100));
+    progress.style.width = pct + "%";
+    if(h.scrollTop > 420){ topBtn.classList.add("show"); } else { topBtn.classList.remove("show"); }
+    ticking = false;
+  }
+  window.addEventListener("scroll", function(){
+    if(!ticking){ ticking = true; window.requestAnimationFrame(onScroll); }
+  }, {passive:true});
+  onScroll();
+
+  topBtn.addEventListener("click", function(e){
+    e.preventDefault();
+    window.scrollTo({top:0, behavior:"smooth"});
+  });
+
+  /* ---- 打招呼按钮 ---- */
+  var hellos = [
+    "你好呀！今天也要好好吃饭哦 🌸",
+    "欢迎光临～随便逛逛吧 ✨",
+    "嘿嘿，被你发现了 🎀",
+    "要不要一起去买杯奶茶？🧋",
+    "作业写完了吗？写完再看剧哦 📚",
+    "记得早点睡觉，晚安 🌙"
+  ];
+  var n = 0;
+  var btn = document.getElementById("helloBtn");
+  if(btn){
+    btn.addEventListener("click", function(){
+      var old = document.querySelector(".toast");
+      if(old){ old.remove(); }
+      var t = document.createElement("div");
+      t.className = "toast";
+      t.textContent = hellos[n % hellos.length];
+      n++;
+      t.style.cssText = [
+        "position:fixed","left:50%","bottom:96px","transform:translate(-50%,14px)",
+        "background:rgba(255,255,255,.96)","color:#6a5570","font-family:inherit",
+        "font-size:17px","padding:14px 24px","border-radius:99px",
+        "border:2px solid rgba(255,255,255,.9)",
+        "box-shadow:0 20px 40px -18px rgba(180,120,200,.95)",
+        "z-index:60","opacity:0","transition:opacity .35s ease, transform .45s cubic-bezier(.22,1,.36,1)",
+        "max-width:min(88vw,520px)","text-align:center","white-space:nowrap"
+      ].join(";");
+      document.body.appendChild(t);
+      requestAnimationFrame(function(){
+        t.style.opacity = "1";
+        t.style.transform = "translate(-50%,0)";
+      });
+      setTimeout(function(){
+        t.style.opacity = "0";
+        t.style.transform = "translate(-50%,14px)";
+        setTimeout(function(){ t.remove(); }, 420);
+      }, 2200);
+    });
+  }
+
+  /* ---- 年份 ---- */
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  /* ---- 首屏就绪 ---- */
+  function ready(){ document.documentElement.classList.add("ready"); }
+  if(document.readyState === "complete"){ ready(); }
+  else{ window.addEventListener("load", ready); }
+  setTimeout(ready, 900);
+})();
+</script>
+</body>
+</html>

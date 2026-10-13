@@ -4,9 +4,9 @@
 
 ## 🌸 在线访问
 
-**<https://mchara520.github.io/YXB-intro/>**
+**<https://mcharaorz.github.io/YXB-intro/>**
 
-仓库地址：<https://github.com/MChara520/YXB-intro>
+仓库地址：<https://github.com/MCharaorz/YXB-intro>
 
 ## 文件结构
 

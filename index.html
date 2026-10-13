@@ -153,7 +153,23 @@ body::before{
     flex:1 1 auto;
     width:100%;
     max-width:none;
+    /* 高度锁定为一屏：超出部分在卡片内部滚动，背景与卡片边框始终完整 */
+    max-height:calc(100vh - 2 * clamp(22px,3vw,52px));
+    overflow-y:auto;
+    overscroll-behavior:contain;
+    scroll-behavior:smooth;
     padding:clamp(28px,2.5vw,46px) clamp(30px,3.4vw,64px);
+  }
+  /* 卡片内部的细滚动条，做成粉紫色调，不抢视觉 */
+  .card::-webkit-scrollbar{width:9px;}
+  .card::-webkit-scrollbar-track{background:transparent;}
+  .card::-webkit-scrollbar-thumb{
+    background:linear-gradient(180deg,rgba(255,158,196,.75),rgba(169,140,240,.75));
+    border-radius:99px;
+    border:2px solid rgba(255,255,255,.6);
+  }
+  .card::-webkit-scrollbar-thumb:hover{
+    background:linear-gradient(180deg,rgba(255,111,165,.9),rgba(123,95,214,.9));
   }
   .cols{
     display:grid;
@@ -187,12 +203,27 @@ body::before{
   .cols{display:block;}
   .quote{margin-top:24px;}
 }
-@media (min-width:901px) and (max-width:1299px){
+@media (min-width:1061px) and (max-width:1299px){
   .cols{grid-template-columns:repeat(2,minmax(0,1fr));}
 }
 @media (min-width:901px) and (max-width:1060px){
   .cols{grid-template-columns:1fr;}
 }
+/* 卡片底部固定：卡片内部滚动时，版权行始终可见 */
+@media (min-width:901px){
+  .foot{
+    position:sticky;
+    bottom:calc(clamp(28px,2.5vw,46px) * -1);
+    z-index:3;
+    margin-top:20px;
+    padding:12px 0 14px;
+    background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.78) 38%);
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+  }
+}
+/* 首页主视觉：桌面端锁定卡片 = 一屏高度（方案③）
+   移动端（≤900px）不锁定，走整页自然滚动（方案②） */
 
 /* 卡片角上的小装饰 */
 .card::before,.card::after{
@@ -421,6 +452,11 @@ h1.name{
 .top.show{opacity:1;pointer-events:auto;transform:none;}
 .top:hover{transform:translateY(-4px) rotate(-8deg);}
 
+/* 桌面端：卡片自身可滚动（带粉色滚动条），不需要"回到顶部"按钮 */
+@media (min-width:901px){
+  .top{display:none;}
+}
+
 /* ============ 响应式 ============ */
 @media (max-width:900px){
   .wrap{display:block;padding-top:clamp(60px,16vh,150px);}
@@ -586,6 +622,7 @@ html:not(.font-ready) body{letter-spacing:0;}
   var progress = document.getElementById("progress");
   var topBtn = document.getElementById("top");
   var ticking = false;
+
   function onScroll(){
     var h = document.documentElement;
     var max = (h.scrollHeight - h.clientHeight) || 1;
@@ -594,6 +631,7 @@ html:not(.font-ready) body{letter-spacing:0;}
     if(h.scrollTop > 420){ topBtn.classList.add("show"); } else { topBtn.classList.remove("show"); }
     ticking = false;
   }
+
   window.addEventListener("scroll", function(){
     if(!ticking){ ticking = true; window.requestAnimationFrame(onScroll); }
   }, {passive:true});

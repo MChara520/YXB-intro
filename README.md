@@ -2,29 +2,62 @@
 
 二次元风格的**单页个人网站**，背景使用插画，全站使用自定义中文字体「字魂流氓兔体」。
 
+## 🌸 在线访问
+
+**<https://mchara520.github.io/YXB-intro/>**
+
+仓库地址：<https://github.com/MChara520/YXB-intro>
+
 ## 文件结构
 
 ```
 index.html                 单页网站（HTML / CSS / JS 全部内联，零依赖）
 assets/bg.png              背景插画
 assets/fonts/liulangtu.ttf 自定义字体：字魂流氓兔体
+README.md                  本说明
+upload.mjs                 上传/更新脚本（走 GitHub API，不需要 git）
+deploy-github.mjs          首次建仓库用的脚本
 ```
 
 ## 本地查看
 
 直接双击 `index.html` 用浏览器打开即可，**不需要任何服务器或构建步骤**。
 
-## 部署与隐私
+## 怎么更新线上内容
 
-- **仓库可见性**：私有（Private）
-- **在线访问**：GitHub Pages 在私有仓库上的发布需要 Pro / Team / Enterprise 账号能力
-  - 私有仓库 + Pages：站点链接（`https://<用户名>.github.io/<仓库名>/`）本身仍是可访问的网址，只是仓库内容不公开
-  - 若在免费账号下发布，Pages 必须选择公开仓库（Public）
-- 想彻底"只有我能看"：改用带访问控制的托管（Cloudflare Pages + Access、Netlify + 密码保护、Vercel + Password Protection），或仅保留私有仓库、不发布线上站点
+改完 `index.html` 后，在项目目录运行：
+
+```powershell
+$env:GH_TOKEN = "你的token"; $env:GH_OWNER = "MChara520"; $env:GH_REPO = "YXB-intro"
+& "C:\Users\MChara\.dsh\dsh-runtimes\dsh-primary-runtime\dependencies\node\bin\node.exe" upload.mjs
+```
+
+脚本会先自检写权限，再逐个上传变更的文件。GitHub Pages 会在 1~2 分钟内自动重新构建。
+
+> token 需要 `Contents: Read and write`（fine-grained）或 `repo`（classic）。用完记得删除。
+
+## 部署情况与隐私说明
+
+| 项目 | 状态 |
+| --- | --- |
+| 仓库可见性 | 公开（Public） |
+| GitHub Pages | 已开启，来源 `main` 分支根目录 |
+| 站点网址 | <https://mchara520.github.io/YXB-intro/> |
+
+**关于隐私**：仓库是公开的，所以**代码和网站所有人都能看到**。如果将来想要"只有自己能看"，有三条路：
+
+1. 把仓库改回 **私有** 并关闭 Pages —— 代码有备份，但线上网址失效
+2. 升级 **GitHub Pro** —— 私有仓库也能发布 Pages（带访问控制）
+3. 迁移到 **Cloudflare Pages + Access** 或 **Netlify**（免费版支持密码保护）
+
+> 曾经的坑：本仓库的 Pages 一度被一个已失效的自定义域名 `ayaka47.leleosd.top` 占用，
+> 导致所有请求 502。已通过 Pages API 执行 `PUT {"cname":null}` 清除，站点恢复正常。
+> 同样的问题也曾影响 <https://mchara520.github.io/>，一并修复。
 
 ## 字体授权提醒
 
-`字魂流氓兔体` 的字体内嵌名称标注为「商用需授权」。公开上线的站点请先确认授权范围；本地自用与私有展示不受影响。
+`字魂流氓兔体` 的字体内嵌名称标注为「商用需授权」。本站目前是**公开**状态，请确认授权范围；
+个人非商用展示通常没有问题。
 
 ## 背景插画
 
